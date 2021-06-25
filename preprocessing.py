@@ -9,16 +9,15 @@ def find_pattern(processed_path):
 	while expand < math.floor(len(processed_path)/2):
 		last_pattern = processed_path[last_char-expand] + last_pattern
 		for i in range(len(last_pattern)):
-			next_pattern = processed_path[last_char - expand -i -1 ] + next_pattern
+			div_index = last_char - expand -i -1 
+			next_pattern = processed_path[div_index] + next_pattern
 		if next_pattern != last_pattern:
 			next_pattern = ''
 			expand += 1
 		else:
 			result = last_pattern
-			return result
+			return result, div_index
 
-	 
-	
 def check_path_possible(processed_path,kripke_matrix):
 	result = True
 	for i in range(len(processed_path)):
