@@ -48,12 +48,15 @@ list_pattern = list(pattern)
 while len(processed_path[div_index:]) < len(processed_path[:div_index]):
 	processed_path += list_pattern
 
+#add in two more patterns for good measure
+for i in range(2):
+	processed_path += list_pattern
 
-print(processed_path)
-print(div_index)
+# print(processed_path)
+# print(div_index)
 
 # getting the LTL formula
-raw_formula = input("enter LTL formula(for now doesn't support parenthesis must be typed explicitly): ")
+raw_formula = input("enter LTL formula: ")
 print(raw_formula)
 processed_formula = []
 processed_formula = re.findall('[A-Z][^A-Z]*', raw_formula)
@@ -79,8 +82,8 @@ else:
 			current_path = TO.Next(current_path)
 		if list_current_formula[0] == 'X' and length == 2:
 			final_answer = TO.Next_last(length,current_path,processed_path,list_current_formula,labels)
-		# if list_current_formula[0] == 'X' and length == 1:
-		# 	final_answer
+		if list_current_formula[0] == 'X' and length == 1:
+			current_path = TO.Next(div_index)
 		if list_current_formula[0] == 'F' and length == 2:
 			final_answer = TO.Future_last(current_path,processed_path,list_current_formula,labels)
 		# current_path+=1

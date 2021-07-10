@@ -1,5 +1,2 @@
-
-	# if final_answer == True:
-	# 	print("YESSSSSS")
-	# elif final_answer == False:
-	# 	print("NOOOOOOO")
+print(processed_path)
+print(div_index)

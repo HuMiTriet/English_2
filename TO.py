@@ -2,7 +2,8 @@
 
 from numpy import true_divide
 
-# def Future():
+def Future(div_index):
+	return div_index
 	
 
 def Future_last(current_path,processed_path,list_current_formula,labels):
