@@ -15,6 +15,9 @@ LET a = 0
 
 LET b = 1
 
+PRINT ""HELLO WORLD""
+
+LET c = a + b
 
 END
 

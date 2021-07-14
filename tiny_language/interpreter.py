@@ -35,6 +35,14 @@ if last_line == "END" or last_line == "END\n":
 else:
 	print("program does not have END")
 
+# deleting BEGIN and END in code_i.txt
+with open('code_i.txt','r') as code:
+	lines = code.readlines()
+with open('code_i.txt','w')	as code:
+	for single_line in lines:
+			if single_line.strip('\n') != "BEGIN" and single_line.strip('\n') != "END":
+				code.write(single_line)
+
 def write_to_python(line,file_name):
 	with open(file_name+".py",'a') as final_file:
 		final_file.write(line)
@@ -57,7 +65,13 @@ if program_start == True and program_end == True:
 					line += ele
 				# print(line)
 				write_to_python(line,file_name)
-			# if words[0]
+			elif words[0] == "PRINT":
+				words.pop(0)
+				print(words)
+			
+			else:
+				print("SYNTAX ERROR ")
+				break
 
 
 os.remove("code_i.txt")
