@@ -11,7 +11,9 @@ BEGIN
 
 
 #more comments 
+LET a = 0
 
+LET b = 1
 
 
 END
