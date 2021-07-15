@@ -61,12 +61,15 @@ def write_to_python(line,file_name):
 #starting the translation process
 if program_start == True and program_end == True:
 	print("CORRECT!!")
+	
+	while_begin = False
 
 	print("Transalting to Python code file")
 	with open('code_i.txt','r') as pseudo_py_code:
 		for line in pseudo_py_code:
 			words = list(line.split(' '))
 			# print(words)
+
 			if words[0] == "LET":
 				words.pop(0)
 				#we now need to convert the list back into a string
@@ -76,6 +79,7 @@ if program_start == True and program_end == True:
 					line += ele
 				# print(line)
 				write_to_python(line,file_name)
+
 			elif words[0] == "PRINT":
 				words.pop(0)
 				#we now check if print has the double "": ""	
@@ -110,8 +114,11 @@ if program_start == True and program_end == True:
 						write_to_python(print_line,file_name)
 					else:
 						print("SYNTAX ERROR STRING FORMAT the closing quote has to match the opeing quote ")
+						break
 				else:
 					print("SYNTAX ERROR PRINT STATEMENT MUST START WITH A "" ")
+					break
+
 			elif words[0] == "INPUT":
 				words.pop(0)
 				input_line =""
@@ -120,6 +127,26 @@ if program_start == True and program_end == True:
 				input_line += " = input()\n"
 				# print(input_line)
 				write_to_python(input_line,file_name)
+
+			elif words[0] == "WHILE":
+				words.pop(0)
+				if words[-1] == "REPEAT":
+					words.pop(-1)
+					while_begin = True
+					while_line = ""
+					while_line += "while"
+					for element in words:
+						while_line+= " "
+						while_line+= element
+					while_line+=":"
+					write_to_python(while_line,file_name)
+			
+
+				else:
+					while_begin = False
+					print("SYNTAX ERROR while must have a REPEATE")
+					break
+		
 
 			else:
 				print("SYNTAX ERROR ")
