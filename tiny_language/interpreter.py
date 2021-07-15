@@ -113,8 +113,13 @@ if program_start == True and program_end == True:
 				else:
 					print("SYNTAX ERROR PRINT STATEMENT MUST START WITH A "" ")
 			elif words[0] == "INPUT":
-				print("sth")					
-
+				words.pop(0)
+				input_line =""
+				variable = words[0]
+				input_line += variable[:-1]
+				input_line += " = input()\n"
+				# print(input_line)
+				write_to_python(input_line,file_name)
 
 			else:
 				print("SYNTAX ERROR ")
