@@ -1,23 +1,15 @@
 
-
-
-
-
-
-
 #this is a comment do not parse this
 
 BEGIN
 
+PRINT ""how many Fibonacci numbers do you want ?""
+INPUT nums
 
-#more comments 
 LET a = 0
-
 LET b = 1
 
-PRINT ""HELLO WORLD""
 
-LET c = a + b
 
 END
 

@@ -1,4 +1,3 @@
-import preprocessing
 import re
 import os
 
@@ -13,7 +12,19 @@ file_name = file_name[-1]
 
 print(file_name)
 
-preprocessing.preprocess(path)
+#comment is this language is the same as python # to start a new comment
+#we first delete white space line and write a new file called code_p as the processed file
+def preprocess(path):
+	with open(path,'r') as code:
+		for line in code:
+			if line != '\n' and line[0] != '#':
+				with open('./code_i.txt','a') as processed:
+					processed.write(line)
+				
+
+#the resulting file will be name as code_i.txt
+
+preprocess(path)
 
 program_start = False
 program_end = False
@@ -67,8 +78,44 @@ if program_start == True and program_end == True:
 				write_to_python(line,file_name)
 			elif words[0] == "PRINT":
 				words.pop(0)
-				print(words)
-			
+				#we now check if print has the double "": ""	
+				# print(words)
+				#getting the first word and last word in words
+				first_word = words[0]
+				last_word = words[-1]
+				# print(first_word)
+				# print(last_word)	
+				quotes_open = first_word[0:2]
+				first_word = first_word.replace('"',"")
+				quotes_close = last_word[-3:-1]
+				last_word = last_word.replace('"',"")
+				if quotes_open[0] == '"':
+					if quotes_open == quotes_close:
+						l_quotes_open = list(quotes_open)
+						l_quotes_open[0] = '('
+						first_word = l_quotes_open[0] + l_quotes_open[1] +first_word
+						# print(first_word)
+						l_quotes_close = list(quotes_close)
+						l_quotes_close[1] = ')'
+						last_word = last_word[:-1] + l_quotes_close[0] + l_quotes_close[1]
+						# print(last_word)
+						print_line = ""
+						print_line += first_word
+						for index_word in range(1,len(words) -1):
+							print_line += " " + words[index_word]
+						print_line+= " "
+						print_line+= last_word
+						print_line = "print"+print_line +'\n'
+						# print(print_line)
+						write_to_python(print_line,file_name)
+					else:
+						print("SYNTAX ERROR STRING FORMAT the closing quote has to match the opeing quote ")
+				else:
+					print("SYNTAX ERROR PRINT STATEMENT MUST START WITH A "" ")
+			elif words[0] == "INPUT":
+				print("sth")					
+
+
 			else:
 				print("SYNTAX ERROR ")
 				break
