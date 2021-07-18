@@ -2,9 +2,8 @@ import re
 import os
 
 print("This is a tiny language with commenting feature, start a comment with a #")
-# path = input("Enter the path to your file: ")
+path = input("Enter the path to your file: ")
 
-path = "./code.txt"
 
 file_name = re.findall('[^/]*[^.txt]',path)
 
@@ -78,7 +77,10 @@ if program_start == True and program_end == True:
 				for ele in words:
 					line += ele
 				# print(line)
-				write_to_python(line,file_name)
+				if while_begin == True:
+					write_to_python('\t'+line,file_name)
+				else:
+					write_to_python(line,file_name)
 
 			elif words[0] == "PRINT":
 				words.pop(0)
@@ -111,26 +113,48 @@ if program_start == True and program_end == True:
 						print_line+= last_word
 						print_line = "print"+print_line +'\n'
 						# print(print_line)
-						write_to_python(print_line,file_name)
+						if while_begin == True:
+							write_to_python('\t'+print_line,file_name)
+						else:
+							write_to_python(print_line,file_name)
 					else:
 						print("SYNTAX ERROR STRING FORMAT the closing quote has to match the opeing quote ")
 						break
 				else:
-					print("SYNTAX ERROR PRINT STATEMENT MUST START WITH A "" ")
-					break
+					# print("SYNTAX ERROR PRINT STATEMENT MUST START WITH A '""' ")
+					# break
+					
+					print_line_var = ""
+					print_line_var += "print("
+					#deleting the newline char in the last word in words
+					last_word = words[-1]
+					words[-1] = last_word[:-1]
+
+					for word in words:
+						print_line_var+= word
+
+					print_line_var+= ")\n"
+
+					if while_begin == True:
+						write_to_python('\t'+print_line_var,file_name)
+					else:
+						write_to_python(print_line_var,file_name)
 
 			elif words[0] == "INPUT":
 				words.pop(0)
 				input_line =""
 				variable = words[0]
 				input_line += variable[:-1]
-				input_line += " = input()\n"
+				input_line += " = int(input())\n"
 				# print(input_line)
-				write_to_python(input_line,file_name)
+				if while_begin == True:
+					write_to_python('\t'+input_line,file_name)
+				else:
+					write_to_python(input_line,file_name)
 
 			elif words[0] == "WHILE":
 				words.pop(0)
-				if words[-1] == "REPEAT":
+				if words[-1] == "REPEAT\n":
 					words.pop(-1)
 					while_begin = True
 					while_line = ""
@@ -139,14 +163,14 @@ if program_start == True and program_end == True:
 						while_line+= " "
 						while_line+= element
 					while_line+=":"
-					write_to_python(while_line,file_name)
-			
-
+					write_to_python(while_line+'\n',file_name)
 				else:
 					while_begin = False
-					print("SYNTAX ERROR while must have a REPEATE")
+					print("SYNTAX ERROR while must have a REPEAT")
 					break
-		
+
+			elif words[0] == "ENDWHILE\n":
+				while_begin = False
 
 			else:
 				print("SYNTAX ERROR ")
@@ -154,3 +178,5 @@ if program_start == True and program_end == True:
 
 
 os.remove("code_i.txt")
+# os.system("./"+file_name+".py")
+exec(open(file_name+".py").read())
